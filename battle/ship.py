@@ -35,7 +35,9 @@ class ship:
             if self._health < 0:
                 self._health = 0
                 message = f'{message[:-1]} and was destroyed.'
-    
+        else:
+            message = f'{self._name} defended the attack with their shield.'
+        self.set_message(message)
     def set_message(self, message):
         self._message = message
 
