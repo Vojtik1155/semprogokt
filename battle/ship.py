@@ -4,7 +4,7 @@
 Ships and their classes for the battle.
 '''
 
-class ship:
+class Ship:
     '''
     Basic class representing ships.
     '''
