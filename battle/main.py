@@ -8,7 +8,8 @@ class Sector:
     Two ships dukin' it out.
     '''
 
-    def __init__(self, ship_1, ship_2, dice):
+    def __init__(self, ship_1, ship_2, dice, name='noname'):
+        self._name = name
         self._ship_1 = ship_1
         self._ship_2 = ship_2
         self._dice = dice
@@ -27,14 +28,14 @@ class Sector:
 
     def _draw(self):
         self._clean()
-        print('====================== The Bluff Sector ======================')
+        print(f'====================== The {self._name} Sector ======================')
         print('Ships:\n')
         self._write_ship(self._ship_1)
         self._write_ship(self._ship_2)
         print()
 
     def war(self):
-        print("Welcome to the Bluff sector.")
+        print(f"Welcome to the {self._name} sector.")
         print("==============================================================")
         print()
         print(f"Today, these ship swill go at it crazy style:\n")
@@ -69,6 +70,10 @@ if __name__ == '__main__':
     d = Dice(10)
     shippy = Ship("Big D. Randy", 67, 80, 15, d)
     pod = Ship("You", 420, 20, 20, d)
-    bluff = Sector(shippy, pod, d)
+    boi = Ship("You again", 420, 20, 20, d)
+
+    bluff = Sector(shippy, pod, d, "Bluff")
+    gamma = Sector(shippy, boi, d, "Gamma")
 
     bluff.war()
+    gamma.war()
