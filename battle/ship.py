@@ -20,6 +20,8 @@ class Ship:
 
     def __str__(self):
         return str(self._name)
+    def is_standing(self):
+        return self._health > 0
 
     def attack(self, opponent):
         hit = self._damage + self._dice.throw()

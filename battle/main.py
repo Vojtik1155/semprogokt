@@ -21,12 +21,15 @@ class Sector:
         print("Press [ENTER] to begin...")
         input()
 
-        self._ship_1.attack(self._ship_2)
-        self._send_message(self._ship_1.send_message())
-        self._send_message(self._ship_2.send_message())
-        self._ship_2.attack(self._ship_1)
-        self._send_message(self._ship_2.send_message())
-        self._send_message(self._ship_1.send_message())
+        while self._ship_1.is_standing() and self._ship_2.is_standing():
+            self._ship_1.attack(self._ship_2)
+            self._send_message(self._ship_1.send_message())
+            self._send_message(self._ship_2.send_message())
+
+            if self._ship_2.is_standing():
+                self._ship_2.attack(self._ship_1)
+                self._send_message(self._ship_2.send_message())
+                self._send_message(self._ship_1.send_message())
 
     def _send_message(self, message):
         print(message)
