@@ -16,7 +16,7 @@ class Ship:
         self._damage = damage
         self._shield = shield
         self._dice = dice
-        self._message = ''
+        self._message = ''   
 
     def __str__(self):
         return str(self._name)
