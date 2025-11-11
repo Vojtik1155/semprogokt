@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 from dice import Dice 
-from ship import Ship
+from ship import Ship, Winger
 
 class Sector:
     '''
     Two ships dukin' it out.
     '''
 
-    def __init__(self, ship_1, ship_2, dice, name='noname'):
+    def __init__(self, ship_1, ship_2, dice, name='null'):
         self._name = name
         self._ship_1 = ship_1
         self._ship_2 = ship_2
@@ -24,7 +24,7 @@ class Sector:
 
     def _write_ship(self, ship):
         print(ship) 
-        print(f'Health: {ship._health}\n')
+        print(f'Health: {ship.visual_health()}\n')
 
     def _draw(self):
         self._clean()
@@ -68,12 +68,16 @@ class Sector:
 
 if __name__ == '__main__':
     d = Dice(10)
-    shippy = Ship("Big D. Randy", 67, 80, 15, d)
-    pod = Ship("You", 420, 20, 20, d)
-    boi = Ship("You again", 420, 20, 20, d)
+    shippy = Ship("Big D. Randy", 200, 80, 15, d)
+    pod = Ship("You", 200, 20, 20, d)
+    boi = Ship("Troy", 200, 20, 20, d)
+    fighter = Winger("X-Wing", 150, 40, 25, d, 100, 90)
+
 
     bluff = Sector(shippy, pod, d, "Bluff")
     gamma = Sector(shippy, boi, d, "Gamma")
+    tarena = Sector(shippy, fighter, d, "Tarena")
 
     bluff.war()
     gamma.war()
+    tarena.war()

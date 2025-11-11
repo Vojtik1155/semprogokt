@@ -23,6 +23,14 @@ class Ship:
     def is_standing(self):
         return self._health > 0
 
+    def visual_health(self):
+        full = 20
+        amount = int(self._health  / self._max_health * full)
+        if amount == 0 and self.is_standing():
+            amount = 1
+        return f'[{"#"*amount}{"-"*(full-amount)}]'
+
+
     def attack(self, opponent):
         hit = self._damage + self._dice.throw()
         message = f'{self._name} is dealing {hit} damage.'
@@ -45,3 +53,26 @@ class Ship:
 
     def send_message(self):
         return self._message
+
+
+class Winger(Ship):
+    """
+    A different class, that adds energy for laser research. 
+    It demonstrates a whole bunch of things... trust me on that.
+    """
+
+    def __init__(self, name, health, damage, shield, dice, energy, laser_attack):
+        super().__init__(name, health, damage, shield, dice)
+        self._energy = energy
+        self._max_energy = energy
+        self._laser_attack = laser_attack
+
+    def attack(self, opponent):
+        if self._energy < self._max_energy:
+            self._energy = min(self._max_energy, self._energy + 25)
+            super().utoc(opponent)
+        else:
+            hit = self._laser_attack + self._dice.throw()
+            self.set_message(f'{self._name} is using its laser to attack for {hit} hp.')
+            self._energie = 0
+            opponent.defend(hit)
