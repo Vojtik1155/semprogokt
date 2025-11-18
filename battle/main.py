@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from dice import Dice 
-from ship import Ship, Winger
+from ship import Ship, Winger, Juggernaut
 
 class Sector:
     '''
@@ -25,6 +25,9 @@ class Sector:
     def _write_ship(self, ship):
         print(ship) 
         print(f'Health: {ship.visual_health()}\n')
+        print(f'Shield: {ship._shield}\n')
+        if isinstance(ship, Winger):
+            print(f'Energy: {ship.visual_energy()}\n')
 
     def _draw(self):
         self._clean()
@@ -69,15 +72,18 @@ class Sector:
 if __name__ == '__main__':
     d = Dice(10)
     shippy = Ship("Big D. Randy", 200, 80, 15, d)
-    pod = Ship("You", 200, 20, 20, d)
-    boi = Ship("Troy", 200, 20, 20, d)
+    pod = Ship("You", 200, 25, 20, d)
+    boi = Ship("Troy", 200, 25, 20, d)
     fighter = Winger("X-Wing", 150, 40, 25, d, 100, 90)
+    fatboy = Juggernaut("Terrance", 250, 30, 30, d)
 
 
-    bluff = Sector(shippy, pod, d, "Bluff")
+    bluff = Sector(fighter, fatboy, d, "Bluff")
     gamma = Sector(shippy, boi, d, "Gamma")
     tarena = Sector(shippy, fighter, d, "Tarena")
 
     bluff.war()
-    gamma.war()
-    tarena.war()
+    # gamma.war()
+    # tarena.war()
+    
+    

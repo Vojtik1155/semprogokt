@@ -23,12 +23,14 @@ class Ship:
     def is_standing(self):
         return self._health > 0
 
-    def visual_health(self):
+    def visual_pointer(self, current, maximum):
         full = 20
-        amount = int(self._health  / self._max_health * full)
+        amount = int(current  / maximum * full)
         if amount == 0 and self.is_standing():
             amount = 1
         return f'[{"#"*amount}{"-"*(full-amount)}]'
+    def visual_health(self):
+        return self.visual_pointer(self._health, self._max_health)
 
 
     def attack(self, opponent):
@@ -70,9 +72,27 @@ class Winger(Ship):
     def attack(self, opponent):
         if self._energy < self._max_energy:
             self._energy = min(self._max_energy, self._energy + 25)
-            super().utoc(opponent)
+            super().attack(opponent)
         else:
             hit = self._laser_attack + self._dice.throw()
             self.set_message(f'{self._name} is using its laser to attack for {hit} hp.')
-            self._energie = 0
+            self._energy = 0
             opponent.defend(hit)
+
+    def visual_energy(self):
+        return self.visual_pointer(self._energy, self._max_energy)
+
+
+
+class Juggernaut(Ship):
+    def defend(self, hit):
+        damage_taken = hit - (self._shield + self._dice.throw() + 5)
+        if damage_taken > 0:
+            message = f'{self._name} got hit for {damage_taken} damage.'
+            self._health -= damage_taken
+            if self._health < 0:
+                self._health = 0
+                message = f'{message[:-1]} and was destroyed.'
+        else:
+            message = f'{self._name} defended the attack with their shield.'
+        self.set_message(message)
